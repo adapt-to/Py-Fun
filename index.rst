@@ -1,20 +1,44 @@
-.. PyFun documentation master file, created by
-   sphinx-quickstart on Wed Nov  7 16:05:03 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to PyFun's documentation!
 =================================
+PyFun !
+=================================
+ ——记录平时遇到但总容易忘记的知识
+
+**这里是想到什么就写什么的Python知识总结**
+
+**知识点不会连贯，你可以使用Search检索**
+
+什么是PyFun ?
+======================
+ ——我喜欢Python的代码风格，我觉得应该和它做一样的事
+
+.. note::
+ PyFun能记录你遇到的 *灵感* 或者*遭遇*
+
+ 它是能让你时刻保持活跃（Fun）的关于Python的文档，所以我给它命名为 PyFun 
+
+ 
+它能做什么 ?
+======================
+
+ ——我希望它是能让接触它的人时刻保持活跃的文档
+
+你在python不懂的都能够在这里找到答案，当然初衷是为自己服务，所以欢迎提交 *commit* 共同完善
+
+
+
+
+.. warning::
+ 本文档不太适合新手，如果你至少阅读过一遍python的基础教程，那就当我没说
+
+*Have PyFun !* ☺
+
+欢迎联系 `无名小辈 <http://www.myheyufei.com/>`_ (*没错，那就是我*)
+
+
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   pyfun_1
+   pyfun_2
