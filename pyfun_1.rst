@@ -211,15 +211,16 @@ Iterable、Iterator、generator的区别
         File "<stdin>", line 1, in <module>
         StopIteration
     
-此时如果再调用，将会抛出 ``StopTteration`` 异常，并且之后无论调用多少次 ``next(ll_iter)`` 都会抛出这个异常，
-这是提示此迭代器中已经没有元素了。
+此时如果再调用，将会抛出 ``StopIteration`` 异常，并且之后无论调用多少次 ``next(ll_iter)`` 都会抛出这个异常，
+这是提示此迭代器中已经没有元素了。既然没有元素了当然不能再使用啦，记住一点：迭代器的原则就是从里面拿出来的元素不能再拿回去了，不走回头路，除非你再创建一个新的。
 
 .. note::
  
- 不是说 ``for`` 迭代执行可迭代对象会生成迭代器吗？为什么没有抛出 ``StopTteration`` 异常？
+ 既然``for`` 语句执行可迭代对象会生成迭代器，那么为什么没有抛出 ``StopIteration`` 异常呢？
 
- 那是因为在 ``for`` 语句中已经对 ``StopTteration`` 异常进行了异常处理，所以我们在终端并不会看到这个异常。
- 那么如果我不想使用 ``for`` 语句进行迭代同时也不想看到 ``StopTteration`` 异常要如何实现呢，其实做一个异常捕获就可以了，看下面：
+ 原因是因为在 ``for`` 语句中已经对 ``StopIteration`` 异常进行了异常处理，所以我们在终端并不会看到这个异常。
+ 那如果不想使用 ``for`` 语句进行迭代的同时也不想看到 ``StopIteration`` 异常要如何实现呢？
+ 其实做一个异常捕获就可以了，看下面：
     
     >>> s = '123'
     >>> s_iter = iter(s) # 创建一个迭代器
@@ -307,3 +308,62 @@ Iterable、Iterator、generator的区别
      1. 生成器就是迭代器 （反之看如何看待，如果细分概念的话可以说迭代器不一定生成器）
      2. ``yield`` 是生成器关键字，它具有 **暂停返回** 的功能
      3. 任何含有 ``yield`` 的函数都可称为生成器函数 （即产生生成器对象的工厂）
+
+ 至此，我们上面自己实现的可迭代对象中的 ``__iter__`` 方法中的内容就可以理解了吧。它返回的就是一个迭代器（生成器）实例。
+ 
+ 其实上面实现 ``__iter__`` 方法中的内容也可以更改为，自己实现一个迭代器类型，然后在``__iter__`` 方法中调用这个迭代器类型产生迭代器实例。
+
+**实现自己的迭代器实例**
+
+ 实现迭代器实例前面讲过是要在内部实现 ``__iter__`` 和 ``__next__`` 方法。并且 ``__iter__`` 方法要返回自身。所以自己实现的话可以这样写::
+
+    class MyIterator:
+
+        def __init__(self, items):
+            self.items = items
+            self.index = 0
+        
+        def __next__(self):
+            try:
+                item = self.items[self.index]
+            except IndexError:
+                raise StopIteration()
+            self.index += 1
+            return item
+        
+        def __iter__(self):
+            return self
+
+ 不过python生而就是为了简洁优雅，所以这种写法只做理解，实际中还是直接用 ``yield`` 来的更清爽简洁不是吗？
+
+.. note::
+  生成器表达式：这是除了生成器函数，还有一个叫做生成器表达式的概念，我们都知道列表推导式，看下面：
+        
+        >>> def test():
+        ...     yield 1
+        ...     yield 2
+        ...     yield 3
+        ...
+        >>> list_1 = [i for i in test()]  # 列表推导式
+        >>> list_1 # 列表推导式能够将内部要迭代的变量一次全拿出来
+        [1, 2, 3]
+        >>> generator_1 = (item for item in test())  # 生成器表达式，和列表推导式的区别是外面用的括号
+        >>> generator_1
+        <generator object <genexpr> at 0x0000027A754DD308>
+        >>> next(generator_1) 
+        1
+        >>> next(generator_1)
+        2
+        >>> next(generator_1)
+        3
+        >>> next(generator_1)
+        Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+        StopIteration
+
+  生成器表达式可以将某些比较简单的生成器函数用一句话表示出来，并且不需要加入 ``yield``，你看上面那个是不是就没有关键字 ``yield``。其实这样好也不好，好处是看着简洁，不好的地方是其他人不一定知道那是一个生成器。
+
+
+    
+
+           
