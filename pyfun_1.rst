@@ -246,8 +246,8 @@ Iterable、Iterator、generator的区别
  前面说了，要实现可迭代对象就必须要在对象内的  ``__iter__`` 方法中返回迭代器的实例。
 
  借用一下前面已经实现的bag的可迭代类型::
+    
     #coding-utf-8
-
     class Bag():
         def __init__(self, maxsize=10): # 指定背包的默认最大长度
             self.maxsize = maxsize
