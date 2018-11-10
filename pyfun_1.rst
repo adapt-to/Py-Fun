@@ -210,7 +210,7 @@ python解释器需要迭代对象时，会自动调用 ``iter(x)``
         File "<stdin>", line 1, in <module>
         StopIteration
     
-此时如果再调用，将会抛出 ``StopTteration`` 异常，并且之后无论调用多少次 ``next(ll_iter)`` 都会抛出和这个异常，
+此时如果再调用，将会抛出 ``StopTteration`` 异常，并且之后无论调用多少次 ``next(ll_iter)`` 都会抛出这个异常，
 这是提示此迭代器中已经没有元素了。
 
 .. note::
