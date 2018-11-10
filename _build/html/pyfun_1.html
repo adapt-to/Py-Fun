@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>春风得意马蹄疾 &mdash; PyFun 1.0 documentation</title>
+  <title>没事就看看吧 &mdash; PyFun 1.0 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="一朝看尽长安花" href="pyfun_2.html" />
+    <link rel="next" title="暂时没想好名字" href="pyfun_2.html" />
     <link rel="prev" title="PyFun !" href="index.html" /> 
 
   
@@ -79,11 +79,12 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">春风得意马蹄疾</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">没事就看看吧</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#iter">序列可迭代的原因：iter函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">可迭代对象、迭代器、生成器的区别</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pyfun_2.html">一朝看尽长安花</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyfun_2.html">暂时没想好名字</a></li>
 </ul>
 
             
@@ -129,7 +130,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>春风得意马蹄疾</li>
+      <li>没事就看看吧</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,7 +150,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>春风得意马蹄疾<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>没事就看看吧<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div>—— 没想好名字，用古诗吧 T-T</div></blockquote>
 <div class="section" id="iter">
@@ -244,6 +245,136 @@
 </div>
 <p>这里的输出证明了，仅仅实现 <em>__getitem__</em> 方法的序列对象也是可迭代对象!</p>
 </div>
+<div class="section" id="id2">
+<h2>可迭代对象、迭代器、生成器的区别<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>我也时常忘记这几个概念，或是知道是怎么回事但却并不能够准确直白的阐述出来。
+‘迭代’ 在python中是我们永远避免不了的东西，不管代码里是否有 <code class="docutils literal notranslate"><span class="pre">for...in...</span></code> 、<code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">...</span></code> 亦或是其他显而易见的循环语句，
+我们都在不可避免的使用 ‘迭代’ 这个东西。</p>
+<p>简单举个例子:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span>
+<span class="go">[0,1,2,3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span>
+<span class="go">[0,1,3]</span>
+</pre></div>
+</div>
+<p>这里虽然没有使用显式的循环，不过这里的 <code class="docutils literal notranslate"><span class="pre">remove</span></code> 方法能够找到列表元素 <code class="docutils literal notranslate"><span class="pre">2</span></code> 实则是通过循环找到的这个元素并将其移除。</p>
+<p><strong>从概念上看这三者的区别：</strong></p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ol class="last arabic simple">
+<li>可迭代对象：顾名思义，能够被迭代的对象，python中所有的序列（包括但不限于list、string、dict、set等）都是可迭代对象</li>
+<li>迭代器：自身可以迭代的对象容器，该对象迭代完内部的元素就不能再被迭代使用。可迭代对象之所以可迭代就是因为其背后实现了迭代器</li>
+<li>所有生成器都是迭代器，不过生成器更侧重于 <strong>凭空产出</strong>，迭代器侧重于从 <strong>内部拿出</strong>。如果对这两个区别不是很清楚，后面会讲到</li>
+</ol>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>什么是迭代：</p>
+<p><strong>迭代</strong> 是重复反馈过程的活动，其目的通常是为了逼近所需目标或结果。每一次对过程的重复称为一次“迭代”，而每一次迭代得到的结果会作为下一次迭代的初始值。
+重复执行一系列运算步骤，从前面的量依次求出后面的量的过程。此过程的每一次结果，都是由对前一次所得结果施行相同的运算步骤得到的。例如利用迭代法*求某一数学问题的解。</p>
+<p>对计算机特定程序中 <strong>需要反复执行的子程序*(一组指令)，进行一次重复，即重复执行程序中的循环，直到满足某条件为止</strong>，亦称为迭代。</p>
+<p class="last">本部分参考自 <a class="reference external" href="https://baike.baidu.com/item/%E8%BF%AD%E4%BB%A3/8415523">[百度百科–迭代]</a></p>
+</div>
+</div></blockquote>
+<p><strong>从代码实现侧面上看，这三者又有什么区别呢？</strong></p>
+<blockquote>
+<div><p>本文档的另一节有说到为什么序列都可以迭代的原因是在内部实现了 <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> 或 <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 方法。
+但你想没想过这些方法背后的东西，这也正是可迭代对象和迭代器的区别所在。</p>
+<dl class="docutils">
+<dt>首先一言以蔽之，先给出可迭代对象和迭代器代码实现上的差别所在（迭代器和生成器之后再说）：</dt>
+<dd><ol class="first arabic">
+<li><p class="first">可迭代对象是由于内部实现了 <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> 或 <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 方法，并且如果自己实现一个迭代器，更倾向于去实现 <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> 方法。</p>
+</li>
+<li><p class="first">其实，可迭代对象中的 <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> 方法内部实现了迭代器的实例，说直白点就是每调用一次这个函数方法都会生成一个迭代器可供我们迭代使用，
+因为上面说过，迭代器使用一次（这里的一次是指完整的整个迭代过程，或者是已经迭代过几次的）后就不能再迭代出前面已经迭代出的元素了，所以，
+每次想重新迭代，都会重新生成一个迭代器。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">list_test</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_test</span><span class="p">:</span> <span class="c1"># 生成迭代器</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_test</span><span class="p">:</span> <span class="c1"># 生成迭代器</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div>虽然这两次循环，输出的元素都是 <code class="docutils literal notranslate"><span class="pre">list_test</span></code> 中的元素，但是两次 <code class="docutils literal notranslate"><span class="pre">for</span></code> 语句执行时都生成了迭代器，并且执行完迭代之后迭代器就被弃用了。</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first">迭代器是由于内部实现了 <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> 和 <code class="docutils literal notranslate"><span class="pre">__next__</span></code>，方法。为此我做一个简单的测试</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">list_test</span><span class="p">)</span> <span class="c1"># python内置的iter()方法可生成迭代器</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">&lt;list_iterator object at 0x0000027A7567FBA8&gt; # a是一个迭代器</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="c1"># 将a中的方法转换为string并给s</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&quot;[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dir__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattribute__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__init_subclass__&#39;, &#39;__iter__&#39;, &#39;__le__&#39;, &#39;__length_hint__&#39;, &#39;__lt__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__next__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__setstate__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;]&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="s1">&#39;__iter__&#39;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">and</span> <span class="s1">&#39;__next__&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span> <span class="c1"># 查看是否在里面</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;this is Iterator&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;this is not Iterator&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">this is Iterator</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote class="last">
+<div>你也可以用和上面同样的方法去测试可迭代对象，python中的 <code class="docutils literal notranslate"><span class="pre">range()</span></code> 方法生成的都是可迭代对象。
+<strong>需要注意的是：</strong> 迭代器中实现的 <code class="docutils literal notranslate"><span class="pre">__iter__</span></code> 方法是指向自己而不是像可迭代对象中的那样去生成一个迭代器实例，原因是迭代器本身就是迭代器，所以指向自己有问题吗？</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt><strong>为什么用迭代器使用一次就不能够再次迭代了</strong></dt>
+<dd>———— 注意这里的 <em>一次</em> 是指整个迭代过程</dd>
+<dt>先看例子：</dt>
+<dd><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll</span>
+<span class="go">[0, 1, 2, 3, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ll_iter</span>            <span class="c1"># ll_iter是一个迭代器</span>
+<span class="go">&lt;list_iterator object at 0x0000027A7567FE10&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">ll_iter</span><span class="p">)</span>      <span class="c1"># 可以使用python内置的next()方法，这里的next()方法会去调用迭代器内部的 __next__方法</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">ll_iter</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">ll_iter</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">ll_iter</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">ll_iter</span><span class="p">)</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>此时将 <code class="docutils literal notranslate"><span class="pre">ll</span></code> 对象中的所有元素都打印出来了，如果继续调用 <code class="docutils literal notranslate"><span class="pre">next(ll_iter)</span></code> 会发生什么，请看：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; next(ll_iter)
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+StopIteration
+</pre></div>
+</div>
+<p>此时如果再调用，将会抛出 <code class="docutils literal notranslate"><span class="pre">StopTteration</span></code> 异常，并且之后无论调用多少次 <code class="docutils literal notranslate"><span class="pre">next(ll_iter)</span></code> 都会抛出和这个异常，
+这是提示此迭代器中已经没有元素了。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>不是说 <code class="docutils literal notranslate"><span class="pre">for</span></code> 迭代执行可迭代对象会生成迭代器吗？为什么没有抛出 <code class="docutils literal notranslate"><span class="pre">StopTteration</span></code> 异常？</p>
+<p class="last">那是因为在 <code class="docutils literal notranslate"><span class="pre">for</span></code> 语句中已经对 <code class="docutils literal notranslate"><span class="pre">StopTteration</span></code> 异常进行了异常处理，所以我们在终端并不会看到这个异常。</p>
+</div>
+</div>
 </div>
 
 
@@ -254,7 +385,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pyfun_2.html" class="btn btn-neutral float-right" title="一朝看尽长安花" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="pyfun_2.html" class="btn btn-neutral float-right" title="暂时没想好名字" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="PyFun !" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
