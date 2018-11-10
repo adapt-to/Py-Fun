@@ -97,6 +97,7 @@ python解释器需要迭代对象时，会自动调用 ``iter(x)``
 
 这里的输出证明了，仅仅实现 *__getitem__* 方法的序列对象也是可迭代对象!
 
+--------------------------------------------------------
 
 Iterable、Iterator、generator的区别
 ===================================
@@ -162,7 +163,7 @@ Iterable、Iterator、generator的区别
     
     虽然这两次循环，输出的元素都是 ``list_test`` 中的元素，但是两次 ``for`` 语句执行时都生成了迭代器，并且执行完迭代之后迭代器就被弃用了。
  
-  3. 迭代器是由于内部实现了 ``__iter__`` 和 ``__next__``，方法。为此我做一个简单的测试
+  3. 迭代器是由于内部实现了 ``__iter__`` 和 ``__next__`` 方法。为此我做一个简单的测试
         
         >>> a = iter(list_test) # python内置的iter()方法可生成迭代器
         >>> a
@@ -218,3 +219,91 @@ Iterable、Iterator、generator的区别
  不是说 ``for`` 迭代执行可迭代对象会生成迭代器吗？为什么没有抛出 ``StopTteration`` 异常？
 
  那是因为在 ``for`` 语句中已经对 ``StopTteration`` 异常进行了异常处理，所以我们在终端并不会看到这个异常。
+ 那么如果我不想使用 ``for`` 语句进行迭代同时也不想看到 ``StopTteration`` 异常要如何实现呢，其实做一个异常捕获就可以了，看下面：
+    
+    >>> s = '123'
+    >>> s_iter = iter(s) # 创建一个迭代器
+    >>> s_iter
+    <str_iterator object at 0x0000027A7567FF28>
+    >>> while 1:
+    ...     try:
+    ...         print(next(s_iter))
+    ...     except StopIteration: # 捕获异常
+    ...         del s_iter        # 废弃该迭代器
+    ...         print('Iterator was deled') # 输出异常捕获后的提示
+    ...         break  # 退出循环
+    ...
+    1
+    2
+    3
+    Iterator was deled
+
+ 上述结果能看出，利用 ``while`` 循环遍历了迭代器并捕获了异常。这些步骤在 ``for`` 语句中都已经帮我们完成了。
+
+**实现自己的可迭代对象**
+
+ 前面说了，要实现可迭代对象就必须要在对象内的  ``__iter__`` 方法中返回迭代器的实例。
+
+ 借用一下前面已经实现的bag的可迭代类型::
+    #coding-utf-8
+
+    class Bag():
+        def __init__(self, maxsize=10): # 指定背包的默认最大长度
+            self.maxsize = maxsize
+            self._items = list() # 实例化容器对象，这里使用list
+
+        def __len__(self): # 求背包现有物品长度
+            return len(self._items)
+
+        def __getitem__(self, index):
+            return self._items[index]
+
+        def add(self, item):
+            if len(self) >= self.maxsize: # add之前判断背包是否物品已满
+                raise Exception('Bag is full')
+            self._items.append(item)
+
+        def remove(self, item):
+            self._items.remove(item)
+
+        def __iter__(self):
+            for item in self._items:
+                yield item
+
+        def clear(self): # 清除
+            self._items.clear()
+ 
+ 上述就是实现了一个可迭代的对象，我们重点关注 ``__iter__`` 和 ``__getitem__`` 方法。这里在 ``__iter__`` 中用到了一个关键字 ``yield``，这个关键字是构建生成器函数的关键字。可以说只要有 ``yield`` 存在的函数\
+ 就是生成器表达式。
+
+ .. note:: 
+  关于 ``yield`` 的解释：
+
+    ``yield`` 是python的关键字，它具有和 ``return`` 类似的功能，但它却又和 ``return`` 具有很大的差别。 
+    它们的共同点都是可以返回元素，不同点是 ``return`` 返回后便不会再执行该函数。而 ``yield`` 返回值后，该函数会在返回值的 ``yield`` （如何函数中有多个 ``yield`` 时）处将函数暂停。继续执行函数，
+    会从上次暂停的 ``yield`` 处继续向下执行直到遇到下一个 ``yield`` 时再返回它对应的值。比如你看下面这个代码：
+        
+        >>> def test():
+        ...     yield 1
+        ...     yield 2
+        ...     yield 3
+        ...
+        >>> s = test()
+        >>> s   # s是一个生成器对象
+        <generator object test at 0x0000027A754DD1A8>
+        >>> next(s)
+        1
+        >>> next(s)
+        2
+        >>> next(s)
+        3
+        >>> next(s)
+        Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+        StopIteration
+
+    先创建一个含有 ``yield`` 的函数，此时s就是一个生成器对象，之前说过所有生成器都是迭代器，所以用 ``next()`` 函数打印出函数中的元素，我们就可以发现这里的 1、2、3都是逐次打出知道出现 ``StopIteration``，
+    这也印证了两点：
+     1. 生成器就是迭代器 （反之看如何看待，如果细分概念的话可以说迭代器不一定生成器）
+     2. ``yield`` 是生成器关键字，它具有 **暂停返回** 的功能
+     3. 任何含有 ``yield`` 的函数都可称为生成器函数 （即产生生成器对象的工厂）
