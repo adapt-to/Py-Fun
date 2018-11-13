@@ -385,5 +385,36 @@ Iterable、Iterator、generator的区别
 生成器如何进化成协程
 ----------------------------
 
-由于 ``yield`` 可以在表达式中使用，并且生成器中提供了API如： ``.send(value)``、``.throw()``、``.close()`` 方法。生成器的调用方可以使用 ``.send(value)`` 发送数据，因此，生成器可以作为协程使用。
-协程是指一个 **过程**，这个过程与调用方 **协作**，产出由调用方提供的值
+    由于 ``yield`` 可以在表达式中使用，并且生成器中提供了API如：
+
+    1. ``.send(value)``、``.throw()``、``.close()`` 方法
+    2. 生成器的调用方可以使用 ``.send(value)`` 发送数据value
+    3. 调用方可以使用 ``.throw()`` 方法抛出异常并在生成器中处理
+    4. ``.close()`` 方法是终止生成器，除了异常的因此，生成器可以作为协程使用
+
+    协程是指一个 **过程**，这个过程与调用方 **协作**，产出由调用方提供的值。
+
+
+用作协程的生成器
+----------------------------
+
+    >>> def my_coroutine(): # 协程使用生成函数定义：定义体中有yield表达式
+    ...     print('start -->')
+    ...     x = yield # yield在等式右边，此时yield后面没有表达式，此时是没有产出，或者说产出为None
+    ...     print('second -->',x) # 输出由调用方send来的x的值
+    ...     y = yield 
+    ...     print('last -->', y)
+    ...
+    >>> my_cor = my_coroutine() # 创建一个生成器实例
+    >>> my_cor
+    <generator object my_coroutine at 0x000002F7FA08D258>
+    >>> next(my_cor) # 预激 协程，使其运行到第一个yield处
+    start -->
+    >>> my_cor.send(10)  # 给第一个yield发送数据为10 ，此时x=10
+    second --> 10  # 输出x的值。说明send正确，此时到了第二个yield处
+    >>> my_cor.send(20)  # 给第二个yield发送数据为20
+    last --> 20 # 此时输出y的值，输出后生成器函数继续执行，发现已到函数末尾。跳出异常
+    Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    StopIteration
+    >>>
