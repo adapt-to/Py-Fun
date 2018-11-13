@@ -427,46 +427,7 @@ Iterable、Iterator、generator的区别
  
  .. warning::
   因为 ``send`` 方法的参数会成为暂停的yield表达式的值，所以仅当协程处于暂停状态时才能够调用send方法。有一个特殊情况是协程还未激活的情况下（即处于 ``GEN_CREATER``），
-  这时，可以使用 ``send(None)`` 预激协程或是调用 ``next(my_cor)`` 激活协程。
+  这时，可以使用 ``send(None)`` 预激协程或是调用 ``next(my_cor)`` 激活协程。1111
 
-    >>> def my_coroutine(a): # 建立用作协程的生成器函数，注意这个函数有参数
-    ...     print('start --> a = ', a)
-    ...     x = yield a
-    ...     print('second --> x =', x)
-    ...     c = yield x + a
-    ...     print('last --> c = ', c)
-    ...
-    >>> my_cor = my_coroutine(1) # 传递参数1并创建生成器实例
-    >>> my_cor # 这是一个生成器
-    <generator object my_coroutine at 0x000002F7FA08D1A8>
-    >>> from inspect import getgeneratorstate
-    >>> getgeneratorstate(my_cor) # 查询此时生成器状态
-    'GEN_CREATED'  # 等待开始执行
-    >>> my_cor.send(None)  # 利用send(None) 预激生成器,这里也可以使用next(my_cor)
-    start --> a =  1
-    1  # 这里的1 是式子 yield a 产出的值 ，yield有产出也有让步
-    >>> getgeneratorstate(my_cor) # 上面产出后，暂停在第一个yield处，这时查询状态，为暂停状态
-    'GEN_SUSPENDED'
-    >>> my_cor.send(10) # 此时由调用方发送数据10 给第一个yield，此时yield后面的式子的值就为10，将10赋值给x
-    second --> x = 10  #  输出x的值
-    11 # 这里的11是第二个yield x + a 式子产出的值，因为x为10 a为1
-    >>> getgeneratorstate(my_cor) # 上面产出后，暂停在第二个yield处，查询状态为暂停状态
-    'GEN_SUSPENDED'
-    >>> my_cor.send(20) # 发送数据给第二个yield，此时 第二个yield后面的式子的值为20，即c为20
-    last --> c =  20 # 输出c为20，由于函数进行到尾部了，所以下面就返回异常
-    #Traceback (most recent call last):
-    #File "<stdin>", line 1, in <module>
-    #StopIteration
-    >>>
-
- 上面的执行过程中特别需要注意的是：
-
-  .. warning::
-   对于 ``x = yield a`` 和 ``c = yield x + a`` 这两句来说，其实可以将其看作是有 ``yield`` 分开的两个部分。
-    1. 第一部分：``yield`` 先产出结果给调用方，然后暂停生成器函数，控制权交给调用方，调用方可以做一系列处理，直到调用方调用 ``.send()`` 方法传递数据
-    2. 第二部分：生成器接收到来自 ``.send()`` 的数据后，``yield`` 后面的表达式不管是什么样子，它们的值统一为 ``.send()`` 方法传递进来的值
-    3. 当利用 ``.send()`` 方法传递值这句话执行时，控制权才再度交回给生成器，这时才将传递进来的值赋值给等式左边的变量
-
- ``yield`` 在这其中起着至关重要的作用。 
 
  
