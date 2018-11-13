@@ -414,9 +414,9 @@ Iterable、Iterator、generator的区别
     second --> 10  # 输出x的值。说明send正确，此时到了第二个yield处
     >>> my_cor.send(20)  # 给第二个yield发送数据为20
     last --> 20 # 此时输出y的值，输出后生成器函数继续执行，发现已到函数末尾。跳出异常
-    Traceback (most recent call last):
-    File "<stdin>", line 1, in <module>
-    StopIteration
+    #Traceback (most recent call last):
+    #File "<stdin>", line 1, in <module>
+    #StopIteration
     >>>
 
  协程在整个过程中可以处于4个状态当中的某一个，状态查询是利用 ``inspect`` 库的 ``getgeneratorstate()`` 方法获取。分别有以下4中状态：
