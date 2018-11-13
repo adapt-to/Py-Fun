@@ -418,3 +418,15 @@ Iterable、Iterator、generator的区别
     File "<stdin>", line 1, in <module>
     StopIteration
     >>>
+
+ 协程在整个过程中可以处于4个状态当中的某一个，状态查询是利用 ``inspect`` 库的 ``getgeneratorstate()`` 方法获取。分别有以下4中状态：
+    1. ``GEN_CREATER`` : 等待开始执行
+    2. ``GEN_RUNNING`` : 解释器正在执行
+    3. ``GEN_SUSPENDED`` : 在 ``yield``表达式处暂停
+    4. ``GEN_CLOSED`` : 执行结束
+ 
+ .. warning::
+  因为 ``send`` 方法的参数会成为暂停的yield表达式的值，所以仅当协程处于暂停状态时才能够调用send方法。有一个特殊情况是协程还未激活的情况下（即处于 ``GEN_CREATER``），
+  这时，可以使用 ``send(None)`` 预激协程或是调用 ``next(my_cor)`` 激活协程。
+
+ 
