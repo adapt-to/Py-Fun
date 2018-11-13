@@ -470,6 +470,10 @@ Iterable、Iterator、generator的区别
 
   ``yield`` 在这其中起着至关重要的作用。 
 
+ 图示如下：
+
   .. image:: ./123.png
+
+  看清楚每一步的走向，都是在 ``yield`` 处暂停。
 
  
