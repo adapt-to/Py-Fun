@@ -16,7 +16,7 @@
 
   高级工具 ``Pandas`` 也是基于 ``numpy`` 来构建的
 
-.. image:: ./Importing_Data_Python_Cheat_Sheet.pdf
+.. image:: ./Importing_Data_Python_Cheat_Sheet.png
 
 NumPy介绍
 =====================
