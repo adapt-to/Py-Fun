@@ -18,7 +18,7 @@
 
 .. image:: ./Importing_Data_Python_Cheat_Sheet.png
 
-NumPy介绍-
+NumPy介绍
 =====================
 
     numpy构建的数组是一个多维的数组对象，由两部分构成：
