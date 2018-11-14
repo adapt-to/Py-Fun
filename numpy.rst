@@ -8,7 +8,9 @@
 * 随机数、线性代数、傅里叶变换等
 
 .. note::
-  ``numpy`` 提供了两种基本的对象：``ndarray``（N-dimensional array object）和 ``ufunc``（universal function object）。
+  ``numpy`` 提供了两种基本的对象：
+  
+  ``ndarray``（N-dimensional array object）和 ``ufunc``（universal function object）.
   ``ndarray`` (下文统一称之为数组)是存储单一数据类型的多维数组，而 ``ufunc`` 则是能够对数组进行处理的函数！
 
   高级工具 ``Pandas`` 也是基于 ``numpy`` 来构建的
@@ -56,3 +58,26 @@ NumPy介绍
     <U11  # 这里的 U11 就是unicode 表示字符型
     >>>
     
+Numpy的索引及切片
+======================
+ 
+ 一维数组的索引及切片
+
+    >>> import numpy as np # 导入模块
+    >>> 
+    >>> ar = np.arange(20) # 利用numpy的arange()方法生成一个含有20个元素的一维数组
+    >>> print(type(ar)) # 查看类型
+    <class 'numpy.ndarray'>
+    >>> print(ar)
+    [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19] # 注意没有逗号
+    >>> print(ar[4]) # 元素索引，和python的序列索引类似
+    4
+    >>> print(ar[5:8]) # 切片，也和python的序列切片类似
+    [5 6 7]
+    >>> print(ar[:5])
+    [0 1 2 3 4]
+    >>> print(ar[:9])
+    [0 1 2 3 4 5 6 7 8]
+    >>> print(ar[::2])  # 指定步长
+    [ 0  2  4  6  8 10 12 14 16 18]
+    >>>
