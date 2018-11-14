@@ -10,8 +10,8 @@
 .. note::
   ``numpy`` 提供了两种基本的对象：
   
-  ``ndarray``(N-dimensional array object)和 ``ufunc``(universal function object)
-   1. ``ndarray``(下文统一称之为数组)是存储单一数据类型的多维数组
+  ``ndarray`` (N-dimensional array object)和 ``ufunc`` (universal function object)
+   1. ``ndarray`` (下文统一称之为数组)是存储单一数据类型的多维数组
    2. ``ufunc`` 则是能够对数组进行处理的函数！
 
   高级工具 ``Pandas`` 也是基于 ``numpy`` 来构建的
@@ -59,7 +59,7 @@ NumPy介绍
     <U11  # 这里的 U11 就是unicode 表示字符型
     >>>
     
-Numpy的索引及切片
+NumPy的索引及切片
 ======================
  
  一维数组的索引及切片
