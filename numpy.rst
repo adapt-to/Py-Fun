@@ -230,7 +230,7 @@ NumPy中随机数
 
     >>> import numpy as np # 导入模块
     >>> 
-    >>> rand_number = np.random.normal(size=(3,3)) # 利用normal()方法生成一个标准正太分布的3*3样本值
+    >>> rand_number = np.random.normal(size=(3,3)) # 利用normal()方法生成一个标准正态分布的3*3样本值
     >>> print(rand_number)
     [[-0.82594205  0.50800583  0.39472314]
      [-0.56514795  0.82111505 -0.22010978]
@@ -262,13 +262,13 @@ NumPy中随机数
     ``rand()`` 方法，根据括号中的参数不同，输出为对应的数组。例如: ``rand = np.random.rand(1000)`` ，
     就是生成1000个满足均匀分布的样本值，这在计算概率或其他方面有重要意义。
 
-生成满足正太分布的随机浮点数(数组)
+生成满足正态分布的随机浮点数(数组)
 ---------------------------------------
-  —— 利用 ``numpy.random.randn()`` 方法，结果满足 **正太分布**
+  —— 利用 ``numpy.random.randn()`` 方法，结果满足 **正态分布**
 
     >>> import numpy as np # 导入模块
     >>> rand = np.random.randn() # 括号不添加参数，则输出为1个数
-    >>> print(rand, type(rand)) # 注意这时输出的数没有区间，但是由于满足正太分布，所以大概率分布在坐标轴上的0左右
+    >>> print(rand, type(rand)) # 注意这时输出的数没有区间，但是由于满足正态分布，所以大概率分布在坐标轴上的0左右
     -0.568911571252003 <class 'float'>
     >>> rand_1 = np.random.randn(4) # 参数为4，则输出4个在[0,1)区间的随机数构成的一维数组
     >>> print(rand_1, type(rand_1))
@@ -282,4 +282,5 @@ NumPy中随机数
 
  .. warning::
   注意这里是  ``numpy.random.randn()`` 方法，与 ``numpy.random.rand()`` 方法的区别仅仅是多了一个字母 ``n``
+
  
