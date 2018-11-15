@@ -399,6 +399,7 @@ reshape()方法
 -------------
  ——— ``reshape()`` 返回的新对象和原对象共用一套数据，换句话说 ``reshape()`` 方法和切片类似，只传递了 **引用**
   
+    >>> import numpy as np
     >>> ar = np.arange(10).reshape(2,5) # 用法一：生成数组时改变形状
     >>> print(ar)
     [[0 1 2 3 4]
@@ -421,6 +422,7 @@ resize()方法
 -------------
   —— 没有返回值或称返回值为None，修改原数据
 
+    >>> import numpy as np
     >>> ar = np.resize(np.ones((5,2)),(2,5)) # 例外的是，np.resize() 是返回一个数组，因为它的参数中就加入了array对象
     >>> print(ar)
     [[1. 1. 1. 1. 1.]
@@ -438,6 +440,7 @@ resize()方法
 数组类型转换
 ------------
 
+    >>> import numpy as np
     >>> ar1 = np.arange(10,dtype=float)
     >>> print(ar1,ar1.dtype)
     [0. 1. 2. 3. 4. 5. 6. 7. 8. 9.] float64
@@ -450,3 +453,65 @@ resize()方法
     [0 1 2 3 4 5 6 7 8 9] int32
 
     此时ar2和ar1是完全独立的两个对象
+
+数组的堆叠
+------------
+ 
+水平(按列)堆叠数组
+++++++++++++++++++++
+ ——``np.hstack()`` 方法
+    
+    >>> import numpy as np
+    >>> ar = np.arange(5)
+    >>> br = np.arange(5,9)
+    >>> print(ar, ar.shape)
+    [0 1 2 3 4] (5,)
+    >>> print(br, br.shape)
+    [5 6 7 8] (4,)
+    >>> cr = np.hstack((ar,br)) # 这里注意hstack()方法中还有一个括号
+    >>> print(cr,cr.shape)
+    [0 1 2 3 4 5 6 7 8] (9,)
+    >>> 
+ 
+ ``np.hstack()`` 方法中的两个数组参数同为一维数组时，它们的 ``shape`` 可以不同
+
+    >>> ar_1 = np.arange(6).reshape(2,3)
+    >>> br_1 = np.arange(6,12).reshape(2,3).astype(np.str)
+    >>> print(ar_1, ar_1.shape) # ar_1为 2行3列的数组
+    [[0 1 2]
+     [3 4 5]] (2, 3)
+    >>> print(br_1, br_1.shape) # br_1也为 2行3列的数组
+    [['6' '7' '8']
+     ['9' '10' '11']] (2, 3)
+    >>> cr_1 = np.hstack((ar_1,br_1))
+    >>> print(cr_1, cr_1.shape) # 因为br_1的数据为str型，所以堆叠之后的结果也为str类型，并且shape为2行6列，按列堆叠
+    [['0' '1' '2' '6' '7' '8']
+     ['3' '4' '5' '9' '10' '11']] (2, 6)
+    >>> 
+
+ .. warning::
+  利用``np.hstack()`` 方法进行按列堆叠时需要注意: 堆叠的数组需满足 **行数** 相同的原则!
+  简称 水平按列行相等
+
+垂直(按行)堆叠数组
+++++++++++++++++++++
+ ——``np.vstack()`` 方法
+
+    >>> import numpy as np
+    >>> ar = np.arange(10).reshape(2,5)
+    >>> print(ar, ar.shape) # ar为2行5列的数组
+    [[0 1 2 3 4]
+     [5 6 7 8 9]] (2, 5)
+    >>> br = np.arange(5,10)
+    >>> print(br, br.shape) # br为1行5列的数组
+    [5 6 7 8 9] (5,)
+    >>> cr = np.vstack((ar,br)) # 利用np.vstack()方法，注意参数内还有一个括号
+    >>> print(cr,cr.shape) # 结果为3行5列，列数不变
+    [[0 1 2 3 4]
+     [5 6 7 8 9]
+     [5 6 7 8 9]] (3, 5)
+
+
+ .. warning::
+  利用``np.vstack()`` 方法进行按行堆叠时需要注意: 堆叠的数组需满足 **列数** 相同的原则!
+  简称 垂直按行列相等
