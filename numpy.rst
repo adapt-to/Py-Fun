@@ -348,11 +348,11 @@ NumPy通用函数
 +++++++++++++++++++++
 
 由上述数组的转置我们发现一维数组利用 ``.T`` 转置后结果不变，如果真的需要将一维数组的1行几列转置成几行1列呢？有以下3种方法：
- 1. 方法一：np.transpose([a])
- 2. 方法二：a.reshape(len(a), -1)
- 3. 方法三：a[:, None]
- 4. 上面三种方法的区别在于：transpose()返回copy, reshape() [,None] 是引用
- 5. 上述中a为np.array对象
+ 1. 方法一： ``np.transpose([a])``
+ 2. 方法二： ``a.reshape(len(a), -1)``
+ 3. 方法三： ``a[:, None]``
+ 4. 上面三种方法的区别在于： ``transpose()`` 返回 ``copy()`` , ``reshape()`` 和 ``[,None]`` 返回引用
+ 5. 上述中 ``a`` 为 ``np.array`` 对象
 
     >>> import numpy as np # 导入模块
     >>> a=np.arange(4)
@@ -391,7 +391,7 @@ NumPy通用函数
      [ 3]]
     >>> print(a) # 这种方法也是共用一套数据
     [-1  1  2  3]
-    >>>
+    
 
 
 
