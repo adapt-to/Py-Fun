@@ -82,3 +82,31 @@ DataFrame
 ========================
  —— 行和列都有标签的多维数组
 
+如何创建DtaFrame
+-----------------
+
+1. 先创建行，列标签，再创建DataFrame
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> dates = pd.date_range('20181116',periods=6) # 创建行标签，6个日期
+    >>> print(dates)
+    DatetimeIndex(['2018-11-16', '2018-11-17', '2018-11-18', '2018-11-19',
+                   '2018-11-20', '2018-11-21'],
+                  dtype='datetime64[ns]', freq='D')
+    >>> df = pd.DataFrame(np.random.randn(6,3), index=dates, columns=['aa','bb','cc']) # 创建DataFrame
+    >>> print(df)
+                      aa        bb        cc
+    2018-11-16 -0.829960 -0.883867 -0.257769
+    2018-11-17 -1.274060  0.209015 -0.003057
+    2018-11-18 -0.515389  1.180768 -1.872595
+    2018-11-19  0.794865 -1.007322  0.809777
+    2018-11-20 -0.629912 -0.497483 -0.022165
+    2018-11-21 -0.145094  0.011507  1.552536
+
+ .. note::
+  由上述可以看到，我们在创建DataFrame前先创建了dates(即行的标签)，然后创建DataFrame，给入的数据为6行3列满足正态分布的随机二维数组，同时\
+  将dates赋给DataFrame的index，这里的index和Series中的index类似。
+  还给定了DataFrame的columns，即每列的标签，这里的columns还可以写作元组类型。
+  最后的结果如上述所示，为一个具有日期的行标签以及字母列标签的二维数组。
+  
