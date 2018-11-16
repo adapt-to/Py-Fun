@@ -138,7 +138,41 @@ DataFrame
     2  1.2 2018-11-16  2  2     ship  Hello
     3  1.2 2018-11-16  3  2     test  Hello
     >>>
-    >>> print(df2.dtypes)
+
+ .. note::
+  上述的字典也可以先写好，然后创建时再传入。
+  
+  这里需要 **注意** 的地方是：
+   * 字典的key是DataFrame的列标签，而不是行标签。这里的行标签没有给出则默认从0开始。
+
+如何拆分DtaFrame
+-----------------
+
+ 面对一个DataFrame，我们要明确它表示的到底是什么，行标签、列标签还有它的内容是什么。所以首先要拆。
+
+ 1. 获得DataFrame的行标签：df.index
+ 2. 获得DataFrame的列标签: df.columns
+ 3. 获得DataFrame的数据  : df.values
+ 4. 获得DataFrame每列数据的dtype：df.dtypes
+ 5. 其中df表示一个DataFrame对象
+
+ 举例如下：
+
+    >>> df2 = pd.DataFrame({'A':1.2,
+                        'B':pd.Timestamp('20181116'),
+                        'C':pd.Series(np.arange(4)),
+                        'D':np.array([2]*4,dtype='int32'),
+                        'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                        'F':'Hello'
+    })
+    >>> print(df2)
+         A          B  C  D        E      F
+    0  1.2 2018-11-16  0  2      car  Hello
+    1  1.2 2018-11-16  1  2  airport  Hello
+    2  1.2 2018-11-16  2  2     ship  Hello
+    3  1.2 2018-11-16  3  2     test  Hello
+    >>>
+    >>> print(df2.dtypes) # 获取每一列的数据类型
     A           float64
     B    datetime64[ns]
     C             int64
@@ -147,16 +181,52 @@ DataFrame
     F            object
     dtype: object
     >>> 
-    >>> print(df2.index) # 输出行标签index的标序
+    >>> print(df2.index) # 获取行标签index
     RangeIndex(start=0, stop=4, step=1)
     >>>
-    >>> print(df2.columns) # 输出列标签的标序
+    >>> print(df2.columns) # 获取列标签columns
     Index(['A', 'B', 'C', 'D', 'E', 'F'], dtype='object')
+    >>>
+    >>> print(df2.values) # 输出DataFrame的values，输出格式为np的array对象
+    [[1.2 Timestamp('2018-11-16 00:00:00') 0 2 'car' 'Hello']
+     [1.2 Timestamp('2018-11-16 00:00:00') 1 2 'airport' 'Hello']
+     [1.2 Timestamp('2018-11-16 00:00:00') 2 2 'ship' 'Hello']
+     [1.2 Timestamp('2018-11-16 00:00:00') 3 2 'test' 'Hello']]
 
+如何获取DataFrame的常用数学结果
+-----------------
 
- .. note::
-  上述的字典也可以先写好，然后创建时再传入。
+利用 ``DataFrame`` 的 ``describle()`` 方法可以获得数据的平均值、方差、标准差等一系列的结果
   
-  这里需要 **注意** 的地方是：
-   1. 字典的key是DataFrame的列标签，而不是行标签。这里的行标签没有给出则默认从0开始。
-   2. df2的dtypes是每一列的数据所对应的数据类型，通过这种方法可以很直观的查看每一列所对应的数据类型。
+  接上例：
+   
+    >>> df2 = pd.DataFrame({'A':1.2,
+                        'B':pd.Timestamp('20181116'),
+                        'C':pd.Series(np.arange(4)),
+                        'D':np.array([2]*4,dtype='int32'),
+                        'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                        'F':'Hello'
+    })
+    >>> print(df2.describe())
+             A         C    D
+    count  4.0  4.000000  4.0
+    mean   1.2  1.500000  2.0
+    std    0.0  1.290994  0.0
+    min    1.2  0.000000  2.0
+    25%    1.2  0.750000  2.0
+    50%    1.2  1.500000  2.0
+    75%    1.2  2.250000  2.0
+    max    1.2  3.000000  2.0
+
+ .. note:;
+  这里为什么只有 `` 'A'、'C'、'D' `` 三列有结果，是因为这三列的数据类型为 **数值** ，可以参考上面的代码。
+  上面代码结果中每行所表示的意思如下：
+   1. count ： 表示该列有多少个数据
+   2. mean ： 表示所有数据的平均值
+   3. std : 表示所有数据的标准差
+   4. min : 表示所有数据中的最小值
+   5. 25% : 表示在最小值与最大值之间的25%处的数值大小
+   6. 50% : 表示在最小值与最大值之间的50%处的数值大小，即为中位数
+   7. 75% : 表示在最小值与最大值之间的75%处的数值大小
+   8. max : 表示所有数据中的最大值
+   
