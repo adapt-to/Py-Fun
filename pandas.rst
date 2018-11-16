@@ -80,7 +80,7 @@ pandas一般搭配着numpy一起运用，两者可以很好地相得益彰。
 
 DataFrame
 ========================
- —— 行和列都有标签的多维数组
+ —— 行和列都有标签的二维数组
 
 如何创建DtaFrame
 -----------------
@@ -109,4 +109,37 @@ DataFrame
   将dates赋给DataFrame的index，这里的index和Series中的index类似。
   还给定了DataFrame的columns，即每列的标签，这里的columns还可以写作元组类型。
   最后的结果如上述所示，为一个具有日期的行标签以及字母列标签的二维数组。
+
+2. 不给定行列标签直接创建DataFrame
+
+    >>> df1 = pd.DataFrame(np.arange(12).reshape((3,4)))
+    >>> print(df1)
+       0  1   2   3
+    0  0  1   2   3
+    1  4  5   6   7
+    2  8  9  10  11
+
+ .. warning::
+  结果如上代码所示，在创建DtaFrame时只给定数据并不给定行列标签，则会默认从0开始给定标签。这一点和Series也是类似的。
+
+3. 利用字典创建DataFrame
+
+    >>> df2 = pd.DataFrame({'A':1.2,
+                        'B':pd.Timestamp('20181116'),
+                        'C':pd.Series(np.arange(4)),
+                        'D':np.array([2]*4,dtype='int32'),
+                        'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                        'F':'Hello'
+    })
+    >>> print(df2)
+         A          B  C  D        E      F
+    0  1.2 2018-11-16  0  2      car  Hello
+    1  1.2 2018-11-16  1  2  airport  Hello
+    2  1.2 2018-11-16  2  2     ship  Hello
+    3  1.2 2018-11-16  3  2     test  Hello
+
+ .. note::
+  上述的字典也可以先写好，然后创建时再传入。
   
+  这里需要 **注意** 的地方是：字典的key是DataFrame的列标签，而不是行标签。这里的行标签没有给出则默认从0开始。
+ 
