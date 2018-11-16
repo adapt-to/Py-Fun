@@ -7,9 +7,9 @@ Pandas
 
 pandas一般搭配着numpy一起运用，两者可以很好地相得益彰。
 
-带标签的'一维数组'Series
+Series
 ========================
- ——带有标签的一维数组，可以保存任何数据类型，轴标签统称为索引
+ ——带标签的“一维数组”，可以保存任何数据类型
 
 如何创建Series
 -----------------
@@ -137,9 +137,26 @@ DataFrame
     1  1.2 2018-11-16  1  2  airport  Hello
     2  1.2 2018-11-16  2  2     ship  Hello
     3  1.2 2018-11-16  3  2     test  Hello
+    >>>
+    >>> print(df2.dtypes)
+    A           float64
+    B    datetime64[ns]
+    C             int64
+    D             int32
+    E          category
+    F            object
+    dtype: object
+    >>> 
+    >>> print(df2.index) # 输出行标签index的标序
+    RangeIndex(start=0, stop=4, step=1)
+    >>>
+    >>> print(df2.columns) # 输出列标签的标序
+    Index(['A', 'B', 'C', 'D', 'E', 'F'], dtype='object')
+
 
  .. note::
   上述的字典也可以先写好，然后创建时再传入。
   
-  这里需要 **注意** 的地方是：字典的key是DataFrame的列标签，而不是行标签。这里的行标签没有给出则默认从0开始。
- 
+  这里需要 **注意** 的地方是：
+   1. 字典的key是DataFrame的列标签，而不是行标签。这里的行标签没有给出则默认从0开始。
+   2. df2的dtypes是每一列的数据所对应的数据类型，通过这种方法可以很直观的查看每一列所对应的数据类型。
