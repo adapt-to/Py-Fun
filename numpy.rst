@@ -652,8 +652,8 @@ stack堆叠
  .. warning::
   
   注意：上述除了 ``sum()`` 方法之外， ``std() var() max() min() mean()`` 等方法都能用一下几种形式表示：
-   1. ``np.max(ar,axis=1)`` 求每行最大值、 ``np.max(ar,axis=0)`` 求每列最大值
-   2. ``np.min(ar,axis=1)`` 求每行最小值、 ``np.max(ar,axis=0)`` 求每列最小值
-   3. ``np.std(ar,axis=1)`` 求每行数据的标准差、 ``np.std(ar,axis=0)`` 求每列数据的标准差
-   4. ``np.var(ar,axis=1)`` 求每行数据的方差、 ``np.var(ar,axis=0)`` 求每列数据的方差
-   5. ``np.mean(ar,axis=1)`` 求每行数据的平均值、 ``np.mean(ar,axis=0)`` 求每列数据的平均值
+   1. ``np.max(ar,axis=1)`` 求每行最大值、 ``np.max(ar,axis=0)`` 求每列最大值、``np.max(ar)`` 求数组中的最大值
+   2. ``np.min(ar,axis=1)`` 求每行最小值、 ``np.max(ar,axis=0)`` 求每列最小值、``np.min(ar)`` 求数组中的最小值
+   3. ``np.std(ar,axis=1)`` 求每行数据的标准差、 ``np.std(ar,axis=0)`` 求每列数据的标准差、``np.std(ar)`` 求数组的标准差
+   4. ``np.var(ar,axis=1)`` 求每行数据的方差、 ``np.var(ar,axis=0)`` 求每列数据的方差、``np.var(ar)`` 求数组的方差
+   5. ``np.mean(ar,axis=1)`` 求每行数据的平均值、 ``np.mean(ar,axis=0)`` 求每列数据的平均值、``np.mean(ar)`` 求数组的平均数
