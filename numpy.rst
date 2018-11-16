@@ -605,7 +605,6 @@ stack堆叠
 数组简单运算
 ---------------
 
-
   >>> import numpy as np
   >>> ar = np.arange(8).reshape(4,2)
   >>> print(ar)
@@ -650,8 +649,7 @@ stack堆叠
   >>> print(np.sum(ar,axis=1)) # 按行求和，结果为每一个行的和。结果还是一个数组
   [ 1  5  9 13]
 
-
- .. warning:
+ .. warning::
   
   注意：上述除了 ``sum()`` 方法之外， ``std() var() max() min() mean()`` 等方法都能用一下几种形式表示：
    1. ``np.max(ar,axis=1)`` 求每行最大值、 ``np.max(ar,axis=0)`` 求每列最大值
