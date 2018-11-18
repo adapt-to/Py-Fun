@@ -125,12 +125,12 @@ DataFrame
 3. 利用字典创建DataFrame
 
     >>> df2 = pd.DataFrame({'A':1.2,
-                        'B':pd.Timestamp('20181116'),
-                        'C':pd.Series(np.arange(4)),
-                        'D':np.array([2]*4,dtype='int32'),
-                        'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
-                        'F':'Hello'
-    })
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(4)),
+                            'D':np.array([2]*4,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                            'F':'Hello'
+        })
     >>> print(df2)
          A          B  C  D        E      F
     0  1.2 2018-11-16  0  2      car  Hello
@@ -159,12 +159,12 @@ DataFrame
  举例如下：
 
     >>> df2 = pd.DataFrame({'A':1.2,
-                        'B':pd.Timestamp('20181116'),
-                        'C':pd.Series(np.arange(4)),
-                        'D':np.array([2]*4,dtype='int32'),
-                        'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
-                        'F':'Hello'
-    })
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(4)),
+                            'D':np.array([2]*4,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                            'F':'Hello'
+        })
     >>> print(df2)
          A          B  C  D        E      F
     0  1.2 2018-11-16  0  2      car  Hello
@@ -201,12 +201,12 @@ DataFrame
   接上例：
    
     >>> df2 = pd.DataFrame({'A':1.2,
-                        'B':pd.Timestamp('20181116'),
-                        'C':pd.Series(np.arange(4)),
-                        'D':np.array([2]*4,dtype='int32'),
-                        'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
-                        'F':'Hello'
-    })
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(4)),
+                            'D':np.array([2]*4,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                            'F':'Hello'
+        })
     >>> print(df2.describe())
              A         C    D
     count  4.0  4.000000  4.0
@@ -229,4 +229,102 @@ DataFrame
    6. 50% : 表示在最小值与最大值之间的50%处的数值大小，即为中位数
    7. 75% : 表示在最小值与最大值之间的75%处的数值大小
    8. max : 表示所有数据中的最大值
+
+  同时对于以上的DataFrame还能够利用 ``.T`` 得到其翻转的结果。示例如下：
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df2 = pd.DataFrame({'A':1.2,
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(4)),
+                            'D':np.array([2]*4,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                            'F':'Hello'
+        })
+    >>> print(df2)
+         A          B  C  D        E      F
+    0  1.2 2018-11-16  0  2      car  Hello
+    1  1.2 2018-11-16  1  2  airport  Hello
+    2  1.2 2018-11-16  2  2     ship  Hello
+    3  1.2 2018-11-16  3  2     test  Hello
+    >>> 
+    >>> print(df2.index)
+    RangeIndex(start=0, stop=4, step=1)
+    >>> print(df2.T) # 翻转数据
+                         0                    1                    2  \
+    A                  1.2                  1.2                  1.2   
+    B  2018-11-16 00:00:00  2018-11-16 00:00:00  2018-11-16 00:00:00   
+    C                    0                    1                    2   
+    D                    2                    2                    2   
+    E                  car              airport                 ship   
+    F                Hello                Hello                Hello   
+
+                        3  
+    A                  1.2  
+    B  2018-11-16 00:00:00  
+    C                    3  
+    D                    2  
+    E                 test  
+    F                Hello  
+
+
+DtaFrame的简单运用
+-----------------
    
+  1. **获取DataFrame中某一列的值**
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df2 = pd.DataFrame({'A':1.2,
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(4)),
+                            'D':np.array([2]*4,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                            'F':'Hello'
+        })
+    >>> print(df2)
+         A          B  C  D        E      F
+    0  1.2 2018-11-16  0  2      car  Hello
+    1  1.2 2018-11-16  1  2  airport  Hello
+    2  1.2 2018-11-16  2  2     ship  Hello
+    3  1.2 2018-11-16  3  2     test  Hello
+    >>> print(df2.A) # 方式一
+    0    1.2
+    1    1.2
+    2    1.2
+    3    1.2
+    Name: A, dtype: float64
+    >>> print(df2['A']) # 方式二
+    0    1.2
+    1    1.2
+    2    1.2
+    3    1.2
+    Name: A, dtype: float64
+  
+   以上两种方式都可以获取到DataFrame的某一列的所有数据
+
+  2. **利用切片获取DataFrame中某一行或某几行的数据**
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df2 = pd.DataFrame({'A':1.2,
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(4)),
+                            'D':np.array([2]*4,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                            'F':'Hello'
+        })
+    >>> print(df2)
+         A          B  C  D        E      F
+    0  1.2 2018-11-16  0  2      car  Hello
+    1  1.2 2018-11-16  1  2  airport  Hello
+    2  1.2 2018-11-16  2  2     ship  Hello
+    3  1.2 2018-11-16  3  2     test  Hello
+    >>> print(df2[0:1]) # 获取第一行的数据
+         A          B  C  D    E      F
+    0  1.2 2018-11-16  0  2  car  Hello
+    >>>
+    >>> print(df2[2:4]) # 获取第三行和第四行的数据
+         A          B  C  D     E      F
+    2  1.2 2018-11-16  2  2  ship  Hello
+    3  1.2 2018-11-16  3  2  test  Hello
