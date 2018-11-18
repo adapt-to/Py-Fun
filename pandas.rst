@@ -332,3 +332,33 @@ DtaFrame的简单运用
    .. note::
     注意上述切片可以是从0开始的切片，但如果DataFrame有具体的行标签，而不是从0开始给的默认行标签时，
     也可以利用行标签来进行切片处理。方法和上述类似
+
+  3. **利用标签获取DataFrame中某一行或者某几列的数据**
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df2 = pd.DataFrame({'A':1.2,
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(4)),
+                            'D':np.array([2]*4,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                            'F':'Hello'
+        })
+    >>> print(df2.loc[0]) # loc后的列表加入需要输出的某一行的标签，此处是默认标签
+    A                    1.2
+    B    2018-11-16 00:00:00
+    C                      0
+    D                      2
+    E                    car
+    F                  Hello
+    Name: 0, dtype: object
+    >>> print(df2.loc[0,['A','E']]) # 获取第一行对应'A'列和'E'列的数据
+    A    1.2
+    E    car
+    Name: 0, dtype: object
+    >>> print(df2.loc[:,['A','E']]) # 这里是获取所有行标签中的对应'A'列和'E'列的数据
+         A        E
+    0  1.2      car
+    1  1.2  airport
+    2  1.2     ship
+    3  1.2     test
