@@ -43,5 +43,6 @@ PyFun !
    pyfun_1
    pyfun_2
    numpy
+   numpy-data
    pandas
    data_import
