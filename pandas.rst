@@ -362,3 +362,21 @@ DtaFrame的简单运用
     1  1.2  airport
     2  1.2     ship
     3  1.2     test
+  
+  4. **利用位置获取DataFrame中某一行或者某几列的数据**
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df2 = pd.DataFrame({'A':1.2,
+                        'B':pd.Timestamp('20181116'),
+                        'C':pd.Series(np.arange(4)),
+                        'D':np.array([2]*4,dtype='int32'),
+                        'E':pd.Categorical(['car', 'airport', 'ship', 'test']),
+                        'F':'Hello'
+    })
+    >>> print(df2.iloc[0,[0,4]]) # 利用iloc，中的参数都是行或列的索引位置
+    A    1.2
+    E    car
+    Name: 0, dtype: object
+
+    
