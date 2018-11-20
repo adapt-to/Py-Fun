@@ -527,3 +527,31 @@ DataFrame数据的排序
 
  .. note::
   上述中的 ``sort_values()`` 方法可以对列数据进行排序，其中 ``ascending`` 参数默认为 ``True`` ，即升序排列。若要降序排列则将其设为 ``False`` 。
+  如果参数中by有多个列标签，则会按照传入参数的顺序，依次排序。举例如下：
+      
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df2 = pd.DataFrame({
+            'A':[1,1,1,2,2,2],
+            'B':'hello',
+            'C':[8,7,6,5,4,3]
+        })
+    >>> print(df2)
+       A      B  C
+    0  1  hello  8
+    1  1  hello  7
+    2  1  hello  6
+    3  2  hello  5
+    4  2  hello  4
+    5  2  hello  3
+    >>> df2.sort_values(by=['A','C'],inplace=True) # 对 'A'和'C'列进行升序排列
+    >>> print(df2)
+       A      B  C
+    2  1  hello  6
+    1  1  hello  7
+    0  1  hello  8
+    5  2  hello  3
+    4  2  hello  4
+    3  2  hello  5
+
+   根据以上结果可以看出，是先对 ``'A'`` 列进行升序排序，在 ``'A'`` 列中的相同数据中对 ``'C'`` 列进行升序排序。
