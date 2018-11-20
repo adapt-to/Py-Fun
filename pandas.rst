@@ -508,3 +508,22 @@ DtaFrame的简单运用
      B  C
   2  2  2
   3  3  2
+
+DataFrame数据的排序
+------------------
+
+ 1. 列数据的排序
+  
+  >>> import pandas as pd
+  >>> import numpy as np
+  >>> df2 = pd.DataFrame(np.random.rand(16).reshape(4,4),columns=('A','B','C','D'))
+  >>> df2.sort_values(['B'],ascending=False,inplace=True) # 对列标签'B'的数据进行排序，其中ascending=False表示降序排列
+  >>> print(df2)
+            A         B         C         D
+  0  0.227082  0.932816  0.154091  0.230558
+  2  0.303671  0.369620  0.436551  0.886735
+  1  0.251629  0.223452  0.325468  0.822408
+  3  0.184967  0.148182  0.793667  0.304142
+
+ .. note::
+  上述中的 ``sort_values()`` 方法可以对列数据进行排序，其中 ``ascending`` 参数默认为 ``True`` ，即升序排列。若要降序排列则将其设为 ``False`` 。
