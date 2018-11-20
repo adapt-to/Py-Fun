@@ -502,3 +502,9 @@ DtaFrame的简单运用
      B  C      E
   2  2  2  Hello
   3  3  2  Hello
+  >>> 
+  >>> df2.drop(['E'],axis=1,inplace=True) # 利用drop删除列，必须制定axis=1，并给出列标签
+  >>> print(df2) # 结果如下
+     B  C
+  2  2  2
+  3  3  2
