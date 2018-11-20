@@ -379,4 +379,32 @@ DtaFrame的简单运用
     E    car
     Name: 0, dtype: object
 
+  5. **利用head()方法获取指定的行数据**
+
+    >>> import pandas as pd
+    >>> import numpy as np
+    >>> df2 = pd.DataFrame({'A':1.2,
+                            'B':pd.Timestamp('20181116'),
+                            'C':pd.Series(np.arange(6)),
+                            'D':np.array([2]*6,dtype='int32'),
+                            'E':pd.Categorical(['car', 'airport', 'ship', 'test', 'test2', 'test3']),
+                            'F':'Hello'
+        })
+    >>> print(df2.head()) # 不传入参数则默认获取前5行的数据，若不足5行则全部显示
+         A          B  C  D        E      F
+    0  1.2 2018-11-16  0  2      car  Hello
+    1  1.2 2018-11-16  1  2  airport  Hello
+    2  1.2 2018-11-16  2  2     ship  Hello
+    3  1.2 2018-11-16  3  2     test  Hello
+    4  1.2 2018-11-16  4  2    test2  Hello
+    >>> print(df2.head(2)) # 传入参数，此时获取前两行数据
+         A          B  C  D        E      F
+    0  1.2 2018-11-16  0  2      car  Hello
+    1  1.2 2018-11-16  1  2  airport  Hello
+  
+   .. warning ::
+    注意：
+     1. 利用 ``head()`` 方法时，若传入的参数大于DataFrame数据的行数，并不会报错而是返回DataFrame所有的数据。
+     2. 若传入的参数为0，不会报错而是给出此时为一个Empty DataFrame，并给出列标签的元素
+     3. 传入的参数还可以是负数，如果传入参数为-1，则表示显示除了最后一行之外的所有数据。传入其它负数也以此类推
     
