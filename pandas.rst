@@ -412,8 +412,10 @@ DtaFrame的简单运用
    有兴趣可以自己尝试一番。
 
 
-如何增加和修改DtaFrame的行列数据
+如何增加修改和删除DtaFrame的行列数据
 --------------------------------
+
+1. **增加和修改操作**
 
 这里要运用到的是前面说到的行列的索引，修改数据的前提就是索引到要修改的位置。举例如下：
 
@@ -474,3 +476,29 @@ DtaFrame的简单运用
   数字  9  100  100  9  o
 
  以上方法就是修改DataFrame的简单方法
+
+2. **删除操作**
+
+  >>> import pandas as pd
+  >>> import numpy as np
+  >>> df2 = pd.DataFrame({'A':1.2,
+                          'B':pd.Series(np.arange(4)),
+                          'C':np.array([2]*4,dtype='int32'),
+                          'E':'Hello'
+      })
+  >>> print(df2) # 原数据如下
+       A  B  C      E
+  0  1.2  0  2  Hello
+  1  1.2  1  2  Hello
+  2  1.2  2  2  Hello
+  3  1.2  3  2  Hello
+  >>> df2.drop([0,1],inplace=True) # 删除第一行和第二行数据，必须添加inplace=True，否则不会在原数据上修改
+  >>> print(df2)
+       A  B  C      E
+  2  1.2  2  2  Hello
+  3  1.2  3  2  Hello
+  >>> del df2['A'] # 删除列标签为'A'的这列数据
+  >>> print(df2)
+     B  C      E
+  2  2  2  Hello
+  3  3  2  Hello
